@@ -1,0 +1,9 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS) // RepositoriesMode.FAIL_ON_PROJECT_REPOS
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "RssMusicApp"
+include ':app'
