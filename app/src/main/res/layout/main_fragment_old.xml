@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <ImageView
         android:id="@+id/pictures_view"
         android:layout_width="0dp"
@@ -73,21 +81,7 @@
         app:layout_constraintTop_toBottomOf="@id/seek_bar"
         app:layout_constraintBottom_toTopOf="@id/play_list"
         app:layout_constraintStart_toStartOf="@id/pictures_view"
-        app:layout_constraintEnd_toStartOf="@id/stop_button"
-        />
-
-    <Button
-        android:id="@+id/stop_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/image_button_margin"
-        android:layout_marginEnd="5dp"
-        android:contentDescription="@string/image_button_desc"
-        android:text="STOP"
-        app:layout_constraintTop_toBottomOf="@id/seek_bar"
-        app:layout_constraintBottom_toTopOf="@id/play_list"
         app:layout_constraintEnd_toStartOf="@id/play_button"
-        app:layout_constraintStart_toEndOf="@id/previous_button"
         />
 
     <Button
@@ -101,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@id/seek_bar"
         app:layout_constraintBottom_toTopOf="@id/play_list"
         app:layout_constraintEnd_toStartOf="@id/pause_button"
-        app:layout_constraintStart_toEndOf="@id/stop_button"
+        app:layout_constraintStart_toEndOf="@id/previous_button"
         />
 
     <Button

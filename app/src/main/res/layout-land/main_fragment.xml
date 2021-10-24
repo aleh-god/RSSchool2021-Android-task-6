@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <VideoView
-        android:id="@+id/video_view"
+    <ImageView
+        android:id="@+id/pictures_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="6:4"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/barrier"
         app:layout_constraintBottom_toTopOf="@id/seek_bar"
         />
 
@@ -22,13 +22,12 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="@dimen/seek_bar_width"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/progress_margin"
         android:layout_marginStart="@dimen/progress_margin"
         android:layout_marginTop="@dimen/progress_margin"
+        android:layout_marginEnd="@dimen/progress_margin"
         app:layout_constraintEnd_toStartOf="@+id/text_total_time"
         app:layout_constraintStart_toEndOf="@+id/text_progress"
-        app:layout_constraintTop_toBottomOf="@+id/video_view"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/pictures_view" />
 
     <TextView
         android:id="@+id/text_progress"
@@ -36,88 +35,105 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/progress_margin"
         android:layout_marginTop="@dimen/progress_margin"
-        app:layout_constraintStart_toStartOf="@id/video_view"
         app:layout_constraintEnd_toStartOf="@id/seek_bar"
-        app:layout_constraintTop_toBottomOf="@+id/video_view"
-        />
+        app:layout_constraintStart_toStartOf="@id/pictures_view"
+        app:layout_constraintTop_toBottomOf="@+id/pictures_view" />
 
     <TextView
         android:id="@+id/text_total_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/progress_margin"
         android:layout_marginTop="@dimen/progress_margin"
-        app:layout_constraintEnd_toEndOf="@id/video_view"
+        android:layout_marginEnd="@dimen/progress_margin"
+        app:layout_constraintEnd_toEndOf="@id/barrier"
         app:layout_constraintStart_toEndOf="@id/seek_bar"
-        app:layout_constraintTop_toBottomOf="@+id/video_view"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/pictures_view" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/video_view"
-        app:layout_constraintEnd_toEndOf="@+id/video_view"
-        app:layout_constraintStart_toStartOf="@+id/video_view"
-        app:layout_constraintTop_toTopOf="@+id/video_view" />
+        app:layout_constraintBottom_toBottomOf="@+id/pictures_view"
+        app:layout_constraintEnd_toEndOf="@+id/pictures_view"
+        app:layout_constraintStart_toStartOf="@+id/pictures_view"
+        app:layout_constraintTop_toTopOf="@+id/pictures_view" />
 
     <Button
         android:id="@+id/previous_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/image_button_margin"
         android:layout_marginStart="@dimen/image_button_margin"
         android:layout_marginEnd="5dp"
+        android:layout_marginBottom="@dimen/image_button_margin"
         android:contentDescription="@string/image_button_desc"
         android:text="PREV"
-        app:layout_constraintTop_toBottomOf="@id/seek_bar"
-        app:layout_constraintStart_toStartOf="@id/video_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/stop_button"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/pictures_view"
+        app:layout_constraintTop_toBottomOf="@id/seek_bar" />
+
+    <Button
+        android:id="@+id/stop_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="@dimen/image_button_margin"
+        android:contentDescription="@string/image_button_desc"
+        android:text="STOP"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/play_button"
-        />
+        app:layout_constraintStart_toEndOf="@id/previous_button"
+        app:layout_constraintTop_toBottomOf="@id/seek_bar" />
 
     <Button
         android:id="@+id/play_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/image_button_margin"
         android:layout_marginEnd="5dp"
+        android:layout_marginBottom="@dimen/image_button_margin"
         android:contentDescription="@string/image_button_desc"
         android:text="PLAY"
-        app:layout_constraintTop_toBottomOf="@id/seek_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/pause_button"
-        app:layout_constraintStart_toEndOf="@id/previous_button"
-        />
+        app:layout_constraintStart_toEndOf="@id/stop_button"
+        app:layout_constraintTop_toBottomOf="@id/seek_bar" />
 
     <Button
         android:id="@+id/pause_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/image_button_margin"
         android:layout_marginEnd="5dp"
+        android:layout_marginBottom="@dimen/image_button_margin"
         android:contentDescription="@string/image_button_desc"
         android:text="PAUSE"
-        app:layout_constraintTop_toBottomOf="@id/seek_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/next_button"
         app:layout_constraintStart_toEndOf="@id/play_button"
-        />
+        app:layout_constraintTop_toBottomOf="@id/seek_bar" />
 
     <Button
         android:id="@+id/next_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="@dimen/image_button_margin"
-        android:layout_marginEnd="@dimen/image_button_margin"
         android:contentDescription="@string/image_button_desc"
         android:text="NEXT"
-        app:layout_constraintTop_toBottomOf="@id/seek_bar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/video_view"
         app:layout_constraintStart_toEndOf="@id/pause_button"
-        />
+        app:layout_constraintTop_toBottomOf="@id/seek_bar" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="next_button,text_total_time,pictures_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="402dp" />
 
     <TextView
         android:id="@+id/play_list"
@@ -125,10 +141,9 @@
         android:layout_height="0dp"
         android:padding="10dp"
         android:text="@string/play_list"
-        app:layout_constraintStart_toEndOf="@id/video_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

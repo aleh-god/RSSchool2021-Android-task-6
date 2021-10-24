@@ -3,9 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="by.godevelopment.rssmusicapp">
 
+    <!--TODO(6): Add FOREGROUND_SERVICE permission-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".MusicApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,16 +24,12 @@
             </intent-filter>
         </activity>
 
-<!--        <service android:name=".media.MediaPlaybackService"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true"-->
-<!--            tools:ignore="ExportedService">-->
-
-<!--            <intent-filter>-->
-<!--                <action android:name="android.media.browse.MediaBrowserService" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
-
+        <!--TODO(1): Define services-->
+        <!--android:enabled: When set to true allows the system to instantiate the services.-->
+        <service
+            android:name="by.godevelopment.rssmusicapp.services.MusicService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

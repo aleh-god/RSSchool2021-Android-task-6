@@ -2,6 +2,7 @@ package by.godevelopment.rssmusicapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import by.godevelopment.rssmusicapp.media.MediaSource
 import by.godevelopment.rssmusicapp.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
