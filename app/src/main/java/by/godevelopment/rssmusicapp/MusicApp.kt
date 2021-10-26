@@ -1,14 +1,15 @@
 package by.godevelopment.rssmusicapp
 
 import android.app.Application
-import by.godevelopment.rssmusicapp.media.PlayList
+import by.godevelopment.rssmusicapp.media.MusicPlayerHandler
 
 class MusicApp : Application() {
-
-    val playList = PlayList
+    private var _musicPlayerHandler: MusicPlayerHandler? = null
+    val musicPlayerHandler: MusicPlayerHandler
+        get() = _musicPlayerHandler!!
 
     override fun onCreate() {
         super.onCreate()
-
+        _musicPlayerHandler = MusicPlayerHandler(this)
     }
 }

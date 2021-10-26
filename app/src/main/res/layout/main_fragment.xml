@@ -15,40 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/seek_bar"
-        />
-
-    <SeekBar
-        android:id="@+id/seek_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="@dimen/seek_bar_width"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/progress_margin"
-        android:layout_marginStart="@dimen/progress_margin"
-        android:layout_marginTop="@dimen/progress_margin"
-        app:layout_constraintEnd_toStartOf="@+id/text_total_time"
-        app:layout_constraintStart_toEndOf="@+id/text_progress"
-        app:layout_constraintTop_toBottomOf="@+id/pictures_view"
-        />
-
-    <TextView
-        android:id="@+id/text_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/progress_margin"
-        android:layout_marginTop="@dimen/progress_margin"
-        app:layout_constraintStart_toStartOf="@id/pictures_view"
-        app:layout_constraintTop_toBottomOf="@+id/pictures_view"
-        />
-
-    <TextView
-        android:id="@+id/text_total_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/progress_margin"
-        android:layout_marginTop="@dimen/progress_margin"
-        app:layout_constraintEnd_toEndOf="@id/pictures_view"
-        app:layout_constraintTop_toBottomOf="@+id/pictures_view"
         />
 
     <ProgressBar
@@ -68,10 +34,10 @@
         android:layout_marginBottom="@dimen/image_button_margin"
         android:layout_marginStart="@dimen/image_button_margin"
         android:layout_marginEnd="5dp"
-        android:contentDescription="@string/image_button_desc"
-        android:text="PREV"
-        app:layout_constraintTop_toBottomOf="@id/seek_bar"
-        app:layout_constraintBottom_toTopOf="@id/play_list"
+        android:contentDescription="@string/prevContentDescription"
+        android:textSize="12sp"
+        android:text="@string/prev"
+        app:layout_constraintTop_toBottomOf="@id/pictures_view"
         app:layout_constraintStart_toStartOf="@id/pictures_view"
         app:layout_constraintEnd_toStartOf="@id/stop_button"
         />
@@ -82,10 +48,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/image_button_margin"
         android:layout_marginEnd="5dp"
-        android:contentDescription="@string/image_button_desc"
-        android:text="STOP"
-        app:layout_constraintTop_toBottomOf="@id/seek_bar"
-        app:layout_constraintBottom_toTopOf="@id/play_list"
+        android:contentDescription="@string/stopContentDescription"
+        android:textSize="12sp"
+        android:text="@string/stop"
+        app:layout_constraintTop_toBottomOf="@id/pictures_view"
         app:layout_constraintEnd_toStartOf="@id/play_button"
         app:layout_constraintStart_toEndOf="@id/previous_button"
         />
@@ -96,10 +62,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/image_button_margin"
         android:layout_marginEnd="5dp"
-        android:contentDescription="@string/image_button_desc"
-        android:text="PLAY"
-        app:layout_constraintTop_toBottomOf="@id/seek_bar"
-        app:layout_constraintBottom_toTopOf="@id/play_list"
+        android:contentDescription="@string/prevContentDescription"
+        android:textSize="12sp"
+        android:text="@string/play"
+        app:layout_constraintTop_toBottomOf="@id/pictures_view"
         app:layout_constraintEnd_toStartOf="@id/pause_button"
         app:layout_constraintStart_toEndOf="@id/stop_button"
         />
@@ -110,10 +76,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/image_button_margin"
         android:layout_marginEnd="5dp"
-        android:contentDescription="@string/image_button_desc"
-        android:text="PAUSE"
-        app:layout_constraintTop_toBottomOf="@id/seek_bar"
-        app:layout_constraintBottom_toTopOf="@id/play_list"
+        android:contentDescription="@string/pauseContentDescription"
+        android:textSize="12sp"
+        android:text="@string/pause"
+        app:layout_constraintTop_toBottomOf="@id/pictures_view"
         app:layout_constraintEnd_toStartOf="@id/next_button"
         app:layout_constraintStart_toEndOf="@id/play_button"
         />
@@ -124,23 +90,37 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/image_button_margin"
         android:layout_marginEnd="@dimen/image_button_margin"
-        android:contentDescription="@string/image_button_desc"
-        android:text="NEXT"
-        app:layout_constraintTop_toBottomOf="@id/seek_bar"
-        app:layout_constraintBottom_toTopOf="@id/play_list"
+        android:contentDescription="@string/nextContentDescription"
+        android:textSize="12sp"
+        android:text="@string/next"
+        app:layout_constraintTop_toBottomOf="@id/pictures_view"
         app:layout_constraintEnd_toEndOf="@id/pictures_view"
         app:layout_constraintStart_toEndOf="@id/pause_button"
         />
 
     <TextView
-        android:id="@+id/play_list"
+        android:id="@+id/title_media"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="10dp"
-        android:text="@string/play_list"
+        android:textSize="12sp"
+        android:text="@string/title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/play_button"
+        app:layout_constraintBottom_toTopOf="@id/author_media"
+        />
+
+    <TextView
+        android:id="@+id/author_media"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        android:textSize="12sp"
+        android:text="@string/artist"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_media"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
