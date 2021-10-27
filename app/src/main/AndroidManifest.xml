@@ -27,7 +27,7 @@
         <!--TODO(1): Define services-->
         <!--android:enabled: When set to true allows the system to instantiate the services.-->
         <service
-            android:name="by.godevelopment.rssmusicapp.services.MusicService"
+            android:name="by.godevelopment.rssmusicapp.services.MusicServiceForeground"
             android:enabled="true"
             android:exported="false" />
     </application>

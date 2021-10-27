@@ -1,6 +1,10 @@
 package by.godevelopment.rssmusicapp.model
 
-enum class MusicState {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+enum class MusicState : Parcelable {
     PLAY,
     PAUSE,
     STOP,
