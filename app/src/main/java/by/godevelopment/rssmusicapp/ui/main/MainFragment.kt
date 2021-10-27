@@ -122,7 +122,7 @@ class MainFragment : Fragment() {
     }
 
     private fun updateState(action: Int) {
-        when(action) {
+        when (action) {
             0 -> mainViewModel.startMusic()
             1 -> mainViewModel.pauseMusic()
             2 -> mainViewModel.stopMusic()

@@ -13,7 +13,6 @@ import by.godevelopment.rssmusicapp.services.MusicServiceForeground
 import by.godevelopment.rssmusicapp.services.SERVICE_COMMAND
 import by.godevelopment.rssmusicapp.services.SERVICE_MUSIC
 
-
 class MusicPlayerHandler(private val context: Context) {
 
     private val mediaSource = MusicSource(context)
@@ -32,7 +31,6 @@ class MusicPlayerHandler(private val context: Context) {
             )
             setDataSource(musicItem.trackUri)
             prepare()
-            start()
         }
         musicState = MusicState.STOP
     }
@@ -65,7 +63,12 @@ class MusicPlayerHandler(private val context: Context) {
     }
 
     fun startNextMusic() {
-        stopMusic()
+        if (musicState != MusicState.STOP) {
+            musicPlayer?.run {
+                stop()
+                release()
+            }
+        }
         mediaSource.getNextMusicItem()?.let {
             Log.i("RssMusicApp", "MusicPlayerHandler: startNextMusic() = ${it.title} = ${mediaSource.playPosition}")
             setMusicPlayer(it)
@@ -76,7 +79,12 @@ class MusicPlayerHandler(private val context: Context) {
     }
 
     fun startPrevMusic() {
-        stopMusic()
+        if (musicState != MusicState.STOP) {
+            musicPlayer?.run {
+                stop()
+                release()
+            }
+        }
         mediaSource.getPrevMusicItem()?.let {
             Log.i("RssMusicApp", "MusicPlayerHandler: startPrevMusic() = ${it.title} = ${mediaSource.playPosition}")
             setMusicPlayer(it)
@@ -100,7 +108,7 @@ class MusicPlayerHandler(private val context: Context) {
 
     fun getMaxSecondsMedia(): Int {
         Log.i("RssMusicApp", "MusicService: getMaxSecondsMedia()")
-        return musicPlayer?.duration  ?: 0
+        return musicPlayer?.duration ?: 0
     }
 
     fun setProgressPlayingMedia(progress: Int) {

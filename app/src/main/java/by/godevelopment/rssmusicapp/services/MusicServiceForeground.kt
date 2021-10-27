@@ -21,7 +21,7 @@ class MusicServiceForeground : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         intent?.extras?.run {
-            var musicItem = MusicItem("null", "null","null","null",0)
+            var musicItem = MusicItem("null", "null", "null", "null", 0)
             val musicItemOrNull = getParcelable<MusicItem>(SERVICE_MUSIC)
             if (musicItemOrNull != null) musicItem = musicItemOrNull
             when (getSerializable(SERVICE_COMMAND) as MusicState) {

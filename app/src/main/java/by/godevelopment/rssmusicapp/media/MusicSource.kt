@@ -9,7 +9,12 @@ import com.squareup.moshi.Types
 
 class MusicSource(context: Context) {
 
-    private val nullMusicItem = MusicItem("Null","Null","R.drawable.ic_music_null.jpg","android.resource://by.godevelopment.rssmusicapp/raw/test",1)
+    private val nullMusicItem = MusicItem(
+        "Null",
+        "Null",
+        "R.drawable.ic_music_null.jpg",
+        "android.resource://by.godevelopment.rssmusicapp/raw/test",
+        1)
 
     private var playList: List<MusicItem> = listOf(
         MusicItem("Ice and Snow","Rafael Krux","https://www.pelicanwater.com/blog/wp-content/uploads/2019/02/cropped-Snow_Blog_Jan_2019-01.jpg","https://freepd.com/music/Ice and Snow.mp3",141000),
@@ -20,7 +25,7 @@ class MusicSource(context: Context) {
     var playPosition: Int = 0
         private set
 
-    init{
+    init {
         Log.i("RssMusicApp", "MusicSource INIT")
 
         val moshi = Moshi.Builder().build()

@@ -34,7 +34,7 @@ class NotificationHelper(private val context: Context) {
 //        // Apply the media style template
 //        .setStyle(
 //            Notification.MediaStyle())
-////                .setShowActionsInCompactView(1 /* #1: pause button \*/))
+//                .setShowActionsInCompactView(1 /* #1: pause button \*/))
 //        .setContentTitle("Wonderful music")
 //        .setContentText("My Awesome Band")
 //        .setLargeIcon(albumArtBitmap)
@@ -48,7 +48,7 @@ class NotificationHelper(private val context: Context) {
                 .setSound(null)
                 .setContentIntent(contentIntent)
                 .setSmallIcon(R.drawable.ic_music)
-                //.setLargeIcon(musicItem.bitmapUri)
+                // .setLargeIcon(musicItem.bitmapUri)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
         }
