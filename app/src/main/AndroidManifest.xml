@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="by.godevelopment.rssmusicapp">
 
-    <!--TODO(6): Add FOREGROUND_SERVICE permission-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -24,10 +23,19 @@
             </intent-filter>
         </activity>
 
-        <!--TODO(1): Define services-->
+        <receiver
+            android:name=".ui.main.MainFragment$MusicReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
+            </intent-filter>
+        </receiver>
+
         <!--android:enabled: When set to true allows the system to instantiate the services.-->
         <service
-            android:name="by.godevelopment.rssmusicapp.services.MusicServiceForeground"
+            android:name=".services.MusicServiceForeground"
             android:enabled="true"
             android:exported="false" />
     </application>

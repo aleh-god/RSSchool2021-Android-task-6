@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import by.godevelopment.rssmusicapp.MainActivity
 import by.godevelopment.rssmusicapp.R
+import by.godevelopment.rssmusicapp.model.MusicItem
 
 private const val CHANNEL_ID = "MusicAppChannel"
 private const val CHANNEL_NAME = "MusicAppChannel"
@@ -18,23 +19,43 @@ private const val CHANNEL_DESCRIPTION = "MusicAppChannelDescription"
 
 class NotificationHelper(private val context: Context) {
 
-    // TODO(9): You’re using NotificationCompat.Builder to create a status bar notification builder.
-    private val notificationBuilder: NotificationCompat.Builder by lazy {
-        NotificationCompat.Builder(context, CHANNEL_ID)
-            .setContentTitle(context.getString(R.string.app_name))
-            .setSound(null)
-            .setContentIntent(contentIntent)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setAutoCancel(true)   // This kind of notification should be set as auto-cancelable, which means that when the user clicks it, it’s automatically dismissed.
-    }
-
-    // TODO(7): Add notificationManager
     private val notificationManager by lazy {
-        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager // NOTIFICATION_SERVICE system service and casting it as NotificationManager.
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    // TODO(12): Add contentIntent. define what happens when a user clicks on the notification.
+//    var notification = NotificationCompat.Builder(context, CHANNEL_ID)
+//        // Show controls on lock screen even when user hides sensitive content.
+//        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+//        .setSmallIcon(R.drawable.ic_stat_player)
+//        // Add media control buttons that invoke intents in your media service
+//        .addAction(R.drawable.ic_prev, "Previous", prevPendingIntent) // #0
+//        .addAction(R.drawable.ic_pause, "Pause", pausePendingIntent) // #1
+//        .addAction(R.drawable.ic_next, "Next", nextPendingIntent) // #2
+//        // Apply the media style template
+//        .setStyle(
+//            Notification.MediaStyle())
+////                .setShowActionsInCompactView(1 /* #1: pause button \*/))
+//        .setContentTitle("Wonderful music")
+//        .setContentText("My Awesome Band")
+//        .setLargeIcon(albumArtBitmap)
+
+    // create a status bar notification builder.
+    private fun getNotificationBuilder(musicItem: MusicItem): NotificationCompat.Builder {
+        val notificationBuilder: NotificationCompat.Builder by lazy {
+            NotificationCompat.Builder(context, CHANNEL_ID)
+                .setContentTitle("Title: ${musicItem.title}")
+                .setContentText("Artist: ${musicItem.artist}")
+                .setSound(null)
+                .setContentIntent(contentIntent)
+                .setSmallIcon(R.drawable.ic_music)
+                //.setLargeIcon(musicItem.bitmapUri)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+        }
+        return notificationBuilder
+    }
+
+    // define what happens when a user clicks on the notification.
     private val contentIntent by lazy {
         PendingIntent.getActivity(
             context,
@@ -44,24 +65,15 @@ class NotificationHelper(private val context: Context) {
         )
     }
 
-    // TODO(10): Define getNotification(). Building a Notification
-    fun getNotification(): Notification {
+    // Define getNotification(). Building a Notification
+    fun getNotification(musicItem: MusicItem): Notification {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(createChannel())
         }
-        return notificationBuilder.build()
+        return getNotificationBuilder(musicItem).build()
     }
 
-    // TODO(11): Define updateNotification()
-    fun updateNotification(notificationText: String? = null) {
-        // You update the text in the notification published in the status bar via the notificationBuilder
-        notificationText?.let { notificationBuilder.setContentText(it) }
-        // Then notify the Notification Manager about which notification to update. To do that, you use a unique NOTIFICATION_ID.
-        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
-    }
-
-
-    // TODO(8): Define createChannel()
+    // Define createChannel()
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createChannel() =
         NotificationChannel(

@@ -4,22 +4,18 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.godevelopment.rssmusicapp.MusicApp
 import by.godevelopment.rssmusicapp.R
 import by.godevelopment.rssmusicapp.databinding.MainFragmentBinding
 import by.godevelopment.rssmusicapp.model.MusicState
-import by.godevelopment.rssmusicapp.services.MusicServiceForeground
-import by.godevelopment.rssmusicapp.services.NOTIFICATION_TEXT
-import by.godevelopment.rssmusicapp.services.SERVICE_COMMAND
+import by.godevelopment.rssmusicapp.services.BROADCAST_COMMAND
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
@@ -52,7 +48,6 @@ class MainFragment : Fragment() {
     private fun setupUI() {
         Log.i("RssMusicApp", "MainFragment: setupUI")
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        // TODO = "delete this"
         updateUI()
     }
 
@@ -66,10 +61,13 @@ class MainFragment : Fragment() {
             stopButton.isEnabled = (mainViewModel.getCurrentMusicState() != MusicState.STOP)
         }
 
+        // TODO = "progressBar GONE // VISIBLE"
+        binding.progressBar.visibility = View.GONE
+
         val current = mainViewModel.getCurrentMusicItem()
         binding.run {
-            authorMedia.text = current.artist
-            titleMedia.text = current.title
+            authorMedia.text = "Artist: ${current.artist}" as String
+            titleMedia.text = "Title: ${current.title}" as String
             Glide.with(root)
                 .load(current.bitmapUri)
                 .centerCrop()
@@ -85,7 +83,6 @@ class MainFragment : Fragment() {
         binding.playButton.setOnClickListener {
             Log.i("RssMusicApp", "MainFragment: playButton.setOnClickListener")
             mainViewModel.startMusic()
-            sendCommandToForegroundService(MusicState.PLAY)
             updateUI()
         }
 
@@ -98,21 +95,18 @@ class MainFragment : Fragment() {
         binding.stopButton.setOnClickListener {
             Log.i("RssMusicApp", "MainFragment: stopButton.setOnClickListener")
             mainViewModel.stopMusic()
-            sendCommandToForegroundService(MusicState.STOP)
             updateUI()
         }
 
         binding.nextButton.setOnClickListener {
             Log.i("RssMusicApp", "MainFragment: nextButton.setOnClickListener")
             mainViewModel.startNextMusic()
-            sendCommandToForegroundService(MusicState.PLAY)
             updateUI()
         }
 
         binding.previousButton.setOnClickListener {
             Log.i("RssMusicApp", "MainFragment: previousButton.setOnClickListener")
             mainViewModel.startPrevMusic()
-            sendCommandToForegroundService(MusicState.PLAY)
             updateUI()
         }
     }
@@ -126,18 +120,6 @@ class MainFragment : Fragment() {
     companion object {
         fun newInstance() = MainFragment()
     }
-
-    // Foreground Service Methods
-    // TODO(15): Call starting a foreground service
-    // Here, you start the service from Activity. You pass its Context and the Intent to start the service.
-    private fun sendCommandToForegroundService(musicState: MusicState) {
-        ContextCompat.startForegroundService(requireContext(), getServiceIntent(musicState))
-    }
-
-    private fun getServiceIntent(command: MusicState) =
-        Intent(requireContext(), MusicServiceForeground::class.java).apply {
-            putExtra(SERVICE_COMMAND, command as Parcelable)
-        }
 
     private fun updateState(action: Int) {
         when(action) {
@@ -153,7 +135,7 @@ class MainFragment : Fragment() {
     inner class MusicReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            if (intent.action == MUSIC_ACTION) updateState(intent.getIntExtra(NOTIFICATION_TEXT, 0))
+            if (intent.action == MUSIC_ACTION) updateState(intent.getIntExtra(BROADCAST_COMMAND, 0))
         }
     }
 }

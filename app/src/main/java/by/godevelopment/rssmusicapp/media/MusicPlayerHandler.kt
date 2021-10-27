@@ -1,16 +1,17 @@
 package by.godevelopment.rssmusicapp.media
 
 import android.content.Context
+import android.content.Intent
+import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.net.Uri
+import android.os.Parcelable
 import android.util.Log
-import android.widget.Toast
-import by.godevelopment.rssmusicapp.R
+import androidx.core.content.ContextCompat
 import by.godevelopment.rssmusicapp.model.MusicItem
 import by.godevelopment.rssmusicapp.model.MusicState
-import android.app.Activity
-import android.media.AudioAttributes
-import com.google.android.material.internal.ContextUtils.getActivity
+import by.godevelopment.rssmusicapp.services.MusicServiceForeground
+import by.godevelopment.rssmusicapp.services.SERVICE_COMMAND
+import by.godevelopment.rssmusicapp.services.SERVICE_MUSIC
 
 
 class MusicPlayerHandler(private val context: Context) {
@@ -19,13 +20,6 @@ class MusicPlayerHandler(private val context: Context) {
 
     private var musicState = MusicState.NULL
     private var musicPlayer: MediaPlayer? = null
-
-    init {
-        //        mediaPlayer = MediaPlayer().apply {
-//            setDataSource(context, Uri.parse(musicItem.trackUri))
-//            isLooping = false
-//        }
-    }
 
     private fun setMusicPlayer(musicItem: MusicItem) {
         Log.i("RssMusicApp", "MusicPlayerHandler: setMediaPlayer = ${musicItem.title} = ${mediaSource.playPosition}")
@@ -45,19 +39,17 @@ class MusicPlayerHandler(private val context: Context) {
 
     fun startMusic() {
         Log.i("RssMusicApp", "MusicPlayerHandler: startMusic() = $musicState")
-        if (musicState == MusicState.PAUSE) {
-            musicPlayer?.start()
-        } else {
-            setMusicPlayer(getCurrentMusicItem())
-            musicPlayer?.start()
-        }
+        if (musicState != MusicState.PAUSE) setMusicPlayer(getCurrentMusicItem())
+        musicPlayer?.start()
         musicState = MusicState.PLAY
+        sendCommandToForegroundService(getCurrentMusicItem())
     }
 
     fun pauseMusic() {
         Log.i("RssMusicApp", "MusicPlayerHandler: pauseMusic()")
         musicPlayer?.pause()
         musicState = MusicState.PAUSE
+        sendCommandToForegroundService(getCurrentMusicItem())
     }
 
     fun stopMusic() {
@@ -68,6 +60,7 @@ class MusicPlayerHandler(private val context: Context) {
                 release()
             }
             musicState = MusicState.STOP
+            sendCommandToForegroundService(getCurrentMusicItem())
         }
     }
 
@@ -78,6 +71,7 @@ class MusicPlayerHandler(private val context: Context) {
             setMusicPlayer(it)
             musicPlayer?.start()
             musicState = MusicState.PLAY
+            sendCommandToForegroundService(it)
         }
     }
 
@@ -88,8 +82,17 @@ class MusicPlayerHandler(private val context: Context) {
             setMusicPlayer(it)
             musicPlayer?.start()
             musicState = MusicState.PLAY
+            sendCommandToForegroundService(it)
         }
     }
+
+    fun getCurrentMusicItem(): MusicItem = mediaSource.getCurrentMusicItem(mediaSource.playPosition)
+
+    fun getCurrentMusicState(): MusicState = musicState
+
+    fun chekNextMusicItem(): Boolean = mediaSource.chekNextMusicItem()
+
+    fun chekPrevMusicItem(): Boolean = mediaSource.chekPrevMusicItem()
 
     fun getCurrentSecondsMedia(): Int {
         return musicPlayer?.currentPosition ?: 0
@@ -105,15 +108,22 @@ class MusicPlayerHandler(private val context: Context) {
         musicPlayer?.seekTo(progress * SECOND)
     }
 
-    fun getCurrentMusicItem(): MusicItem = mediaSource.getCurrentMusicItem(mediaSource.playPosition)
-
-    fun getCurrentMusicState(): MusicState = musicState
-
-    fun chekNextMusicItem(): Boolean = mediaSource.chekNextMusicItem()
-
-    fun chekPrevMusicItem(): Boolean = mediaSource.chekPrevMusicItem()
-
     companion object {
         const val SECOND = 1000
     }
+
+    // Call starting a foreground service
+    private fun sendCommandToForegroundService(musicItem: MusicItem) {
+        ContextCompat.startForegroundService(context, getServiceIntent(musicItem))
+    }
+
+    private fun getServiceIntent(musicItem: MusicItem) =
+        Intent(context, MusicServiceForeground::class.java).apply {
+            putExtra(SERVICE_MUSIC, musicItem)
+            putExtra(SERVICE_COMMAND, musicState as Parcelable)
+        }
+
+    //    override fun onPrepared(p0: MediaPlayer?) {
+    //        binding.progressBar.visibility = View.GONE
+    //    }
 }

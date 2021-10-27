@@ -1,7 +1,10 @@
 package by.godevelopment.rssmusicapp.model
 
 import com.squareup.moshi.JsonClass
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class MusicItem(
     val title: String,
@@ -9,8 +12,4 @@ data class MusicItem(
     val bitmapUri: String,
     val trackUri: String,
     val duration: Int
-) {
-    override fun toString(): String {
-        return "MusicItem: $title"
-    }
-}
+) : Parcelable
